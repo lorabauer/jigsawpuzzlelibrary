@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+    <title>Jigsaw Puzzle Library Catalog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #3e8e41;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        #search {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .puzzle-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .puzzle-item {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+            width: 200px;
+            cursor: pointer;
+        }
+        .puzzle-detail {
+            background: white;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+        #back-button {
+            padding: 10px 20px;
+            background: #3e8e41
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Jigsaw Puzzle Library</h1>
+        <input type="text" id="search" placeholder="Search for puzzles...">
+    </header>
+    
+    <main>
+        <div id="puzzle-list" class="puzzle-list"></div>
+        <div id="puzzle-detail" class="puzzle-detail hidden">
+            <h2 id="puzzle-title"></h2>
+            <img id="puzzle-image" src="" alt="Puzzle Image">
+            <p id="puzzle-description"></p>
+            <a id="amazon-link" href="#" target="_blank">Buy on Amazon</a>
+            <button id="back-button">Back to List</button>
+        </div>
+    </main>
+    
+    <script>
+        const puzzles = [
+            {
+                title: "Sunset Over the Ocean",
+                image: "https://m.media-amazon.com/images/I/711eHtojYRL._AC_SX679_.jpg",
+                description: "A beautiful sunset over the ocean with vibrant colors.",
+                amazonLink: "https://amzn.to/3Y146w5"
+            },
+            {
+                title: "Mountain Landscape",
+                image: "https://m.media-amazon.com/images/I/81aRsyuMXfL._AC_SX679_.jpg",
+                description: "A stunning view of mountains surrounded by greenery."
+                amazonLink: "https://amzn.to/4dp0fNN"
+            },
+            {
+                title: "City Skyline",
+                image: "https://m.media-amazon.com/images/I/71dk0lblfIL._AC_UF894,1000_QL80_.jpg",
+                description: "A picturesque skyline of a bustling city at night."
+                amazonLink: "https://www.amazon.com/Jigsaw-Puzzles-Adults-1000-Pieces/dp/B08F34X473?crid=2R76EXD7018KP&dib=eyJ2IjoiMSJ9.UqTQZdtv7sTEHvM9Sm1JT_sFm-aoN9AvalXmOUiHY0iohm6L_vA62wl8cdfcNJDaeM1zFjWEeFQnXCWAB2xDnsVnJVPdLD4pP0eU1JF5pyVcNAeMrN7MLAuBrRZBx6WLdtXCr3mohI1FrbobqIFHfMkrRgqHH6XSDVMIqoYBXvZDGiGltUTLbSI-3lxkELKLifaApMz76KrcVW1xJr2806pXUocTwrmQh9Ij3wk_E-V9Xd1-EhCTVqUHHcUq52zyh0m_maSx4tC38g5SPIbNRzybMIyeXzk0MqC_wCD-e00.0v4BW5wr4HuyJmv72iSqQ6jO5ScY9nFsS57NRf2QDVc&dib_tag=se&keywords=city%2Bskyline%2Bpuzzle&qid=1727641150&sprefix=city%2Bskyline%2Bpuzzl%2Caps%2C195&sr=8-5&th=1&linkCode=ll1&tag=jigsawpuzzl02-20&linkId=56a74f5be5576e463b6f7594d9226450&language=en_US&ref_=as_li_ss_tl"
+            }
+            ];
+            
+        const puzzleList = document.getElementById('puzzle-list');
+        const puzzleDetail = document.getElementById('puzzle-detail');
+        const puzzleTitle = document.getElementById('puzzle-title');
+        const puzzleImage = document.getElementById('puzzle-image');
+        const puzzleDescription = document.getElementById('puzzle-description');
+        const amazonLink = document.getElemendById('amazon-link');
+        const searchInput = document.getElementById('search');
+        const backButton = document.getElementById('back-button');
+            function displayPuzzles(puzzlesToShow) {
+                puzzleList.innerHTML = '';
+
+                if (puzzlesToShow.length > 0) {
+                    puzzlesToShow.forEach((puzzle, index) => {
+      // ... create puzzle item and add to puzzleList as before ...
+                    });
+                    } else {
+    // Display a message indicating no results found
+                    puzzleList.innerHTML = '<p>No puzzles found.</p>';
+                 }
+            }
+
+            function
+                showPuzzleDetail(index) {
+                    const puzzle = puzzles[index];
+                    puzzleTitle.innerText = puzzle.title;
+                    puzzleImage.src = puzzle.image;
+                    puzzleDescription.innerText = puzzle.description;
+                      amazonLink.href = puzzle.amazonLink;
+                    puzzleDetail.classList.remove('hidden');
+                    puzzleList.classList.add('hidden');
+                }
+                backButton.addEventListener('click', () => {
+                    puzzleDetail.classList.add('hidden');
+                    puzzleList.classList.remove('hidden');
+                });
+                
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredPuzzles = puzzles.filter(puzzle => puzzle.title.toLowerCase().includes(searchTerm)
+            );
+            displayPuzzles(filteredPuzzles);
+        });
+        // Initial display of puzzles
+        displayPuzzles(puzzles);
+    </script>
+</body>
+</html>
